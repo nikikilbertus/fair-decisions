@@ -1,0 +1,75 @@
+{
+  "seed": 0,
+  "fairness": null,
+  "lambda": 0.0,
+  "debug": 1,
+
+  "optimization": {
+    "time_steps": 150,
+    "epochs": 40,
+    "minibatches": 64,
+    "batchsize": 64,
+    "learning_rate": 0.1,
+    "e_lr_frequency": 1000,
+    "e_lr_factor": 1.0,
+    "lr_frequency": 1000,
+    "lr_factor": 1.0,
+    "fix_proposed": true,
+    "max_data": 1000000
+  },
+
+  "utility": {
+    "cost": 0.6,
+    "n_samples_estimate": 10000,
+    "n_samples_estimate_single": 100000
+  },
+
+  "policy": {
+    "initialization": "pre_trained",
+    "n_pre_training": 500,
+    "pre_train_class": 1
+  },
+
+  "true_distribution": {
+    "type": "compas",
+    "theta": [-0.1, 0.7],
+    "custom_tweaks": ["split_support"],
+    "available_tweaks": ["split_support", "bump_left", "bump_right"],
+    "protected": "gender",
+    "threshold": -0.3,
+    "path": "data/",
+    "test_size": 0.2,
+    "add_constant": true,
+    "protected_as_feature": false,
+    "uncalibrated_params": {
+      "bound": 0.8,
+      "width": 30.0,
+      "height": 3.0,
+      "shift": 0.1
+    }
+  },
+
+  "perform": [
+    ["recent", "logistic"],
+    ["recent", "semi_logistic"],
+    ["all", "logistic"],
+    ["all", "semi_logistic"],
+    ["all", "deterministic_threshold"],
+    ["recent", "deterministic_threshold"]
+  ],
+
+  "feature_map": {
+    "type": "identity",
+    "n_fit": 10
+  },
+
+  "results": {
+    "name": null,
+    "result_dir": "results/",
+    "monitored": [
+      "TPR", "FPR", "TNR", "FNR", "PPV", "NPV", "FDR", "FOR", "ACC", "ERR",
+      "SEL", "F1", "AVG_ODDS_DIFF", "AVG_ABS_ODDS_DIFF", "ERR_DIFF", "DI", "DP",
+      "EOP", "A", "N", "P"
+    ]
+  }
+}
